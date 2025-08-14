@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books & PDF Notes - Edu Smartspark</title>
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #2667cc;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #8338ec;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .logo-text {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        .logo-text span {
+            color: var(--primary);
+        }
+        
+        /* Hero */
+        .books-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .books-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .books-hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Books Section */
+        .books-main {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--dark);
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+        }
+        
+        .resource-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tab-btn {
+            padding: 10px 25px;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .resource-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .resource-content {
+            padding: 20px;
+        }
+        
+        .resource-content h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .resource-meta {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .resource-content p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: var(--secondary);
+        }
+        
+        /* Search */
+        .search-section {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            padding-left: 45px;
+            transition: border 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-about h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-about p {
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 0;
+            text-align: center;
+            color: #bbb;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .books-hero {
+                padding: 100px 0 40px;
+            }
+            
+            .books-hero h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .books-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .books-main {
+                padding: 60px 0;
+            }
+            
+            .tab-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+            <nav>
+                <a href="../index.html">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="books-hero">
+        <div class="container">
+            <h1>Books & PDF Notes</h1>
+            <p>Download recommended books and comprehensive PDF notes for your courses</p>
+        </div>
+    </section>
+
+    <main class="books-main">
+        <div class="container">
+            <h2 class="section-title">Study Resources</h2>
+            
+            <div class="search-section">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search books, notes or subjects...">
+            </div>
+            
+            <div class="resource-tabs">
+                <button class="tab-btn active" data-tab="books">Books</button>
+                <button class="tab-btn" data-tab="notes">PDF Notes</button>
+                <button class="tab-btn" data-tab="syllabus">Syllabus</button>
+                <button class="tab-btn" data-tab="guides">Study Guides</button>
+            </div>
+            
+            <div id="books-content" class="tab-content">
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-img" style="background-image: url('../images/book1.jpg');"></div>
+                        <div class="resource-content">
+                            <h3>Modern Indian History</h3>
+                            <div class="resource-meta">
+                                <span>BA History</span>
+                                <span>Semester 1</span>
+                            </div>
+                            <p>Comprehensive guide covering Indian history from 1857 to present day with practice questions.</p>
+                            <a href="#" class="download-btn">Download PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-img" style="background-image: url('../images/book2.jpg');"></div>
+                        <div class="resource-content">
+                            <h3>Principles of Accountancy</h3>
+                            <div class="resource-meta">
+                                <span>B.Com</span>
+                                <span>Semester 1</span>
+                            </div>
+                            <p>Fundamentals of accounting with solved examples and practice problems for better understanding.</p>
+                            <a href="#" class="download-btn">Download PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-img" style="background-image: url('../images/book3.jpg');"></div>
+                        <div class="resource-content">
+                            <h3>University Physics</h3>
+                            <div class="resource-meta">
+                                <span>B.Sc Physics</span>
+                                <span>Semester 2</span>
+                            </div>
+                            <p>Complete physics textbook covering mechanics, thermodynamics, and electromagnetism.</p>
+                            <a href="#" class="download-btn">Download PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-img" style="background-image: url('../images/book4.jpg');"></div>
+                        <div class="resource-content">
+                            <h3>Business Economics</h3>
+                            <div class="resource-meta">
+                                <span>B.Com</span>
+                                <span>Semester 3</span>
+                            </div>
+                            <p>Essential concepts of micro and macro economics with business applications.</p>
+                            <a href="#" class="download-btn">Download PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-img" style="background-image: url('../images/book5.jpg');"></div>
+                        <div class="resource-content">
+                            <h3>Organic Chemistry</h3>
+                            <div class="resource-meta">
+                                <span>B.Sc Chemistry</span>
+                                <span>Semester 4</span>
+                            </div>
+                            <p>Detailed organic chemistry textbook with reaction mechanisms and practice problems.</p>
+                            <a href="#" class="download-btn">Download PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-img" style="background-image: url('../images/book6.jpg');"></div>
+                        <div class="resource-content">
+                            <h3>Political Theory</h3>
+                            <div class="resource-meta">
+                                <span>BA Political Science</span>
+                                <span>Semester 2</span>
+                            </div>
+                            <p>Comprehensive coverage of political theories from ancient to contemporary thinkers.</p>
+                            <a href="#" class="download-btn">Download PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="notes-content" class="tab-content" style="display: none;">
+                <!-- PDF Notes content would go here -->
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-img" style="background-image: url('../images/notes1.jpg');"></div>
+                        <div class="resource-content">
+                            <h3>English Literature Notes</h3>
+                            <div class="resource-meta">
+                                <span>BA English</span>
+                                <span>Semester 1</span>
+                            </div>
+                            <p>Comprehensive notes covering all prescribed texts with critical analysis.</p>
+                            <a href="#" class="download-btn">Download PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-img" style="background-image: url('../images/notes2.jpg');"></div>
+                        <div class="resource-content">
+                            <h3>Cost Accounting Notes</h3>
+                            <div class="resource-meta">
+                                <span>B.Com</span>
+                                <span>Semester 3</span>
+                            </div>
+                            <p>Detailed notes on cost accounting methods with solved problems.</p>
+                            <a href="#" class="download-btn">Download PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Edu Smartspark</h3>
+                    <p>Providing quality educational resources for university students since 2020.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="question-papers.html">Question Papers</a></li>
+                        <li><a href="solutions.html">Solved Papers</a></li>
+                        <li><a href="gk-current-affairs.html">GK & Current Affairs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Edu Smartspark. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                tabBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Hide all content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Show selected content
+                const tab = btn.getAttribute('data-tab');
+                document.getElementById(`${tab}-content`).style.display = 'block';
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const resourceCards = document.querySelectorAll('.resource-card');
+            
+            resourceCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || desc.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
